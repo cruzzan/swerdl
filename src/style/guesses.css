@@ -1,0 +1,37 @@
+#guesses {
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.2rem;
+    justify-self: center;
+
+    .letter {
+        display: flex;
+        border: 1px solid hsl(from var(--base-color-light) h s calc(l - 40));
+        border-radius: 10px;
+        aspect-ratio: 1;
+        align-self: center;
+        align-items: center;
+        justify-content: center;
+        container-type: inline-size;
+
+        span {
+            font-size: 30cqi;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 1px #000;
+        }
+
+        &.guessed {
+            background-color: var(--guessed-color);
+        }
+
+        &.correct {
+            background-color: var(--correct-color);
+        }
+
+        &.present {
+            background-color: var(--present-color);
+        }
+    }
+}

@@ -10,25 +10,3 @@ max_line_length = 80
 tab_width = 4
 trim_trailing_whitespace = true
 
-[*.less]
-indent_size = 2
-
-[*.sass]
-indent_size = 2
-
-[*.scss]
-indent_size = 2
-
-[*.vue]
-indent_size = 2
-tab_width = 2
-
-[{*.bash,*.sh,*.zsh}]
-indent_size = 2
-tab_width = 2
-
-[{*.har,*.jsb2,*.jsb3,*.json,.babelrc,.eslintrc,.prettierrc,.stylelintrc,bowerrc,jest.config}]
-indent_size = 2
-
-[{*.yaml,*.yml}]
-indent_size = 2

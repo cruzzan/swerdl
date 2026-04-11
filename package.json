@@ -1,31 +1,23 @@
 {
-  "name": "termly",
+  "name": "swerdl",
   "version": "1.0.0",
   "description": "Guess the word!",
   "main": "src/index.html",
   "scripts": {
     "dev": "vite --port 8080 --host",
     "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint"
+    "preview": "vite preview"
   },
-  "repository": "git+https://github.com/cruzzan/termly.git",
+  "repository": "git+https://github.com/cruzzan/swerdl.git",
   "author": "Cruzzan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/cruzzan/termly/issues"
+    "url": "https://github.com/cruzzan/swerdl/issues"
   },
-  "homepage": "https://github.com/cruzzan/termly#readme",
+  "homepage": "https://github.com/cruzzan/swerdl#readme",
   "devDependencies": {
-    "@popperjs/core": "^2.11.6",
-    "@vitejs/plugin-vue": "^4.0.0",
-    "bootstrap": "^5.2.3",
-    "eslint": "^8.30.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-vue": "^9.8.0",
-    "prettier": "^2.8.1",
-    "sass": "^1.57.0",
-    "vite": "^4.0.2",
-    "vue": "^3.2.45"
+    "eslint": "10.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "vite": "8.0.5"
   }
 }

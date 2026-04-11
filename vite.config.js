@@ -1,16 +1,12 @@
-const path = require('path')
-import vue from '@vitejs/plugin-vue'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default {
-    plugins: [vue()],
-    root: path.resolve(__dirname, 'src'),
-    resolve: {
-        alias: {
-            '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
-        }
-    },
-    server: {
-        port: 8080,
-        hot: true
-    }
+  root: resolve(__dirname, 'src'),
+  server: {
+    port: 8080,
+    hot: true,
+  },
 }

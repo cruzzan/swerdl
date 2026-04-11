@@ -1,52 +1,75 @@
 <!doctype html>
-<html lang="en" class="vh-100">
+<html lang="sv">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Termly, almost as fun as the original</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="style/sensible.css" rel="stylesheet" type="text/css">
+    <link href="style/style.css" rel="stylesheet" type="text/css">
+    <title>svrdl, almost as fun as the original</title>
 </head>
-<body class="vh-100 d-flex flex-column">
+<body>
 <header>
-    <nav class="container-fluid navbar justify-content-evenly bg-dark">
-        <div></div>
-        <a class="navbar-brand" href="#"><h2 class="display-2 text-white-50">Termly</h2></a>
-        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#helpModal">?</button>
+    <nav>
+        <h1>SVRDL</h1>
     </nav>
 </header>
-<main class="flex-grow-1 bg-gray">
-    <div id="app"></div>
-    <div id="helpModal" class="modal fade" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-info">
-                    <h5 class="modal-title">Hur funkar det?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Svenska ord, mellan 4-11 bokstäver långa. Alla bokstäverna finns på "<a href="https://en.wikipedia.org/wiki/Touch_typing#Home_row" target="_blank">hemraden</a>" på ett <a href="https://en.wikipedia.org/wiki/QWERTY" target="_blank">qwerty-tangentbord</a></p>
-                    <p>Du har 5 försök på dig.</p>
-                    <p>När ramen runt bokstäverna som du gissat är grön, så har du gissat rätt antal tecken.</p>
-                    <p>När bakgrunden på en gissad bokstav är gul, så förekommer bokstaven, men den är inte på rätt plats.</p>
-                    <p>När bakgrunden på en gissad bokstav är grön, så är bokstaven rätt gissad.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
+<main>
+    <div id="guesses"></div>
+    <div id="keyboard">
+        <section>
+            <span class="key" data-value="Q">Q</span>
+            <span class="key" data-value="W">W</span>
+            <span class="key" data-value="E">E</span>
+            <span class="key" data-value="R">R</span>
+            <span class="key" data-value="T">T</span>
+            <span class="key" data-value="Y">Y</span>
+            <span class="key" data-value="U">U</span>
+            <span class="key" data-value="I">I</span>
+            <span class="key" data-value="O">O</span>
+            <span class="key" data-value="P">P</span>
+            <span class="key" data-value="Å">Å</span>
+        </section>
+        <section>
+            <span class="key" data-value="A">A</span>
+            <span class="key" data-value="S">S</span>
+            <span class="key" data-value="D">D</span>
+            <span class="key" data-value="F">F</span>
+            <span class="key" data-value="G">G</span>
+            <span class="key" data-value="H">H</span>
+            <span class="key" data-value="J">J</span>
+            <span class="key" data-value="K">K</span>
+            <span class="key" data-value="L">L</span>
+            <span class="key" data-value="Ö">Ö</span>
+            <span class="key" data-value="Ä">Ä</span>
+        </section>
+        <section class="baserow">
+            <span class="key control" data-value="ENTER">ENTER</span>
+            <span class="key correct" data-value="Z">Z</span>
+            <span class="key present" data-value="X">X</span>
+            <span class="key guessed" data-value="C">C</span>
+            <span class="key" data-value="V">V</span>
+            <span class="key" data-value="B">B</span>
+            <span class="key" data-value="N">N</span>
+            <span class="key" data-value="M">M</span>
+            <span class="key control" data-value="BACKSPACE">⌫</span>
+        </section>
     </div>
 </main>
+<!--<dialog id="help-dialog">-->
+<!--    <h2>Hur funkar det?</h2>-->
+<!--    <p>Svenska ord, som är 5 bokstäver långa. A-Ö</p>-->
+<!--    <p>Du har 6 försök på dig.</p>-->
+<!--    <p>När bakgrunden på en gissad bokstav är gul, så förekommer bokstaven, men den är inte på rätt plats.</p>-->
+<!--    <p>När bakgrunden på en gissad bokstav är grön, så är bokstaven rätt gissad.</p>-->
+<!--    <p>När bakgrunden på en gissad bokstav förblir grå, så är bokstaven inte med i ordet.</p>-->
+<!--    <button id="help-close" type="button">Stäng</button>-->
+<!--</dialog>-->
+<div id="toast-container"></div>
 <footer>
-    <nav class="navbar sticky-bottom bg-dark">
-        <div class="container-fluid justify-content-center">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a href="https://github.com/cruzzan/termly" class="text-decoration-underline text-white-50" target="_blank">This repo</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <a href="#" id="toast-tester" title="Testa brödrosten">Test toast</a>
+    <a href="#" id="reset-game" title="Starta om spelet">Starta om</a>
+    <a href="https://github.com/cruzzan/swerdl" title="Gå till GitHub repot" target="_blank">This repo</a>
 </footer>
-<script type="module" src="./js/main.js"></script>
+<script src="js/main.js" type="module"></script>
 </body>
 </html>
