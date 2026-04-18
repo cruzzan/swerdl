@@ -1,0 +1,28 @@
+---
+name: "tagged-release"
+
+on:
+    push:
+        tags:
+            - "v*"
+
+jobs:
+    tagged-release:
+        name: "Tagged release"
+        runs-on: "ubuntu-latest"
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: "Build & pack"
+              run: |
+                  yarn install
+                  yarn build
+                  cd src/dist/ && tar -czf ../../swerdl.tar.gz index.html assets/ && cd ../../
+
+            - name: "Create release"
+              uses: fnkr/github-action-ghr@v1
+              env:
+                  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+                  GHR_PATH: swerdl.tar.gz
