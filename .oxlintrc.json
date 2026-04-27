@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript",
+    "unicorn",
+    "oxc"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "pedantic": "off"
+  },
+  "rules": {},
+  "env": {
+    "builtin": true,
+    "browser": true,
+    "es2022": true
+  }
+}
