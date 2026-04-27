@@ -13,11 +13,11 @@ export class GameState {
         this.status = "playing"
         this.initializedAt = Date.now()
 
-        let gameState = this.#load()
+        const gameState = this.#load()
         if (gameState) {
-            let now = new Date(Date.now())
+            const now = new Date(Date.now())
             now.setHours(0, 0, 0, 0)
-            let initAt = new Date(gameState.initializedAt)
+            const initAt = new Date(gameState.initializedAt)
             initAt.setHours(0, 0, 0, 0)
 
             if (now.getTime() === initAt.getTime()) {
@@ -35,20 +35,20 @@ export class GameState {
     }
 
     submitGuess() {
-        let word = this.currentInput.toUpperCase()
+        const word = this.currentInput.toUpperCase()
         if (word.length !== GameState.MAX_WORD_SIZE) {
-            throw Error("Word is too short")
+            throw new Error("Word is too short")
         }
 
         if (!words.includes(word)) {
-            throw Error("Word is not in the game")
+            throw new Error("Word is not in the game")
         }
 
         if (this.status !== "playing" || this.guesses.length >= GameState.MAX_GUESSES) {
-            throw Error("Game over")
+            throw new Error("Game over")
         }
 
-        let guessParts = []
+        const guessParts = []
         for (let i = 0; i < word.length; i++) {
             let partState = 0
             if (word[i] === this.targetWord[i]) {
@@ -70,9 +70,7 @@ export class GameState {
         this.guesses.push(guessParts)
         this.currentInput = ""
 
-        if (guessParts.reduce((acc, part) => {
-            return acc + part.state
-        }, 0) === 10) {
+        if (guessParts.reduce((acc, part) => acc + part.state, 0) === 10) {
             this.status = "won"
         } else if (this.guesses.length >= GameState.MAX_GUESSES) {
             this.status = "lost"
@@ -90,7 +88,7 @@ export class GameState {
 
     removeLetter() {
         if (this.currentInput.length > 0) {
-            let tmp = this.currentInput
+            const tmp = this.currentInput
             this.currentInput = tmp.substring(0, tmp.length - 1)
             this.#store()
         }
@@ -119,7 +117,7 @@ export class GameState {
     }
 
     #newWord() {
-        let word = words[Math.floor(Math.random() * words.length)]
+        const word = words[Math.floor(Math.random() * words.length)]
         return word.toUpperCase()
     }
 

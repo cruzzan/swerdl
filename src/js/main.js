@@ -6,16 +6,16 @@ const game = new GameState()
 function init() {
     // Regular keyboard input listener
     document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey || e.metaKey || e.altKey) return
+        if (e.ctrlKey || e.metaKey || e.altKey) {return}
         const key = e.key.toUpperCase()
         handleInput(key)
     })
 
     // Virtual keyboard input
-    let keyboard_buttons = document.querySelectorAll("div#keyboard section span.key")
+    const keyboard_buttons = document.querySelectorAll("div#keyboard section span.key")
     keyboard_buttons.forEach(button => {
         button.addEventListener("click", (e) => {
-            let key = e.currentTarget.getAttribute("data-value")
+            const key = e.currentTarget.getAttribute("data-value")
             handleInput(key)
         })
     })
@@ -37,8 +37,8 @@ function handleInput(key) {
     if (key === 'ENTER') {
         try {
             game.submitGuess()
-        } catch (e) {
-            switch (e.message) {
+        } catch (error) {
+            switch (error.message) {
                 case "Word is not in the game":
                     showToast("Ordet finns inte i listan", 5000)
                     break
@@ -46,7 +46,7 @@ function handleInput(key) {
                     showToast("Spelet är slut", 5000)
                     break
                 default:
-                    console.error(e)
+                    console.error(error)
                     break
             }
         }
@@ -62,7 +62,7 @@ function handleInput(key) {
 
 function renderGuesses() {
     let emptyTiles = GameState.MAX_WORD_SIZE * GameState.MAX_GUESSES
-    let board = document.getElementById('guesses')
+    const board = document.getElementById('guesses')
     board.innerHTML = ''
 
     // Render guesses
@@ -82,14 +82,17 @@ function renderGuesses() {
             if (part) {
                 item.className = 'letter'
                 switch (part.state) {
-                    case 1:
+                    case 1: {
                         item.className = `${item.className} present`
                         break
-                    case 2:
+                    }
+                    case 2: {
                         item.className = `${item.className} correct`
                         break
-                    default:
+                    }
+                    default: {
                         item.className = `${item.className} guessed`
+                    }
                 }
                 item.innerHTML = `<span>${part.part}</span>`;
             } else {
@@ -104,7 +107,7 @@ function renderGuesses() {
 
     // Render current input
     for (let i = 0; i < game.currentInput.length; i++) {
-        let letter = game.currentInput.charAt(i)
+        const letter = game.currentInput.charAt(i)
         const item = document.createElement('div')
         item.className = 'letter'
         item.innerHTML = `<span>${letter}</span>`;
@@ -122,7 +125,7 @@ function renderGuesses() {
 }
 
 function paintKeyboard() {
-    let keyboard_buttons = document.querySelectorAll("div#keyboard section span.key")
+    const keyboard_buttons = document.querySelectorAll("div#keyboard section span.key")
 
     keyboard_buttons.forEach(key => {
         key.classList.remove("correct")
@@ -130,14 +133,17 @@ function paintKeyboard() {
         key.classList.remove("guessed")
 
         switch (game.letterStatus(key.getAttribute("data-value"))) {
-            case 2:
+            case 2: {
                 key.classList.add("correct")
                 break
-            case 1:
+            }
+            case 1: {
                 key.classList.add("present")
                 break
-            case 0:
+            }
+            case 0: {
                 key.classList.add("guessed")
+            }
         }
     })
 }
