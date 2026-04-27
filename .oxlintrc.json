@@ -7,10 +7,14 @@
   ],
   "categories": {
     "correctness": "error",
+    "style": "error",
     "suspicious": "error",
     "pedantic": "off"
   },
-  "rules": {},
+  "rules": {
+    "no-magic-numbers": "off",
+    "max-statements": "off"
+  },
   "env": {
     "builtin": true,
     "browser": true,

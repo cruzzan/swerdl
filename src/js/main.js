@@ -1,21 +1,21 @@
-import {showToast} from './toast'
 import {GameState} from './gamestate'
+import {showToast} from './toast'
 
 const game = new GameState()
 
-function init() {
+const init = () => {
     // Regular keyboard input listener
-    document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey || e.metaKey || e.altKey) {return}
-        const key = e.key.toUpperCase()
+    document.addEventListener('keydown', (event) => {
+        if (event.ctrlKey || event.metaKey || event.altKey) {return}
+        const key = event.key.toUpperCase()
         handleInput(key)
     })
 
     // Virtual keyboard input
     const keyboard_buttons = document.querySelectorAll("div#keyboard section span.key")
     keyboard_buttons.forEach(button => {
-        button.addEventListener("click", (e) => {
-            const key = e.currentTarget.getAttribute("data-value")
+        button.addEventListener("click", (event) => {
+            const key = event.currentTarget.getAttribute("data-value")
             handleInput(key)
         })
     })
@@ -26,28 +26,31 @@ function init() {
 
     document.getElementById("reset-game").addEventListener('click', () => {
         game.clear()
-        window.location.reload()
+        globalThis.location.reload()
     })
 
     renderGuesses()
     paintKeyboard()
 }
 
-function handleInput(key) {
+const handleInput = (key) => {
     if (key === 'ENTER') {
         try {
             game.submitGuess()
         } catch (error) {
             switch (error.message) {
-                case "Word is not in the game":
+                case "Word is not in the game": {
                     showToast("Ordet finns inte i listan", 5000)
                     break
-                case "Game over":
+                }
+                case "Game over": {
                     showToast("Spelet är slut", 5000)
                     break
-                default:
+                }
+                default: {
                     console.error(error)
                     break
+                }
             }
         }
     } else if (key === 'BACKSPACE') {
@@ -60,23 +63,23 @@ function handleInput(key) {
     paintKeyboard()
 }
 
-function renderGuesses() {
+const renderGuesses = () => {
     let emptyTiles = GameState.MAX_WORD_SIZE * GameState.MAX_GUESSES
     const board = document.getElementById('guesses')
     board.innerHTML = ''
 
     // Render guesses
-    for (let i = 0; i < game.guesses.length; i++) {
-        let guess
-        if (game && game.guesses && game.guesses.length >= i+1) {
-            guess = game.guesses[i]
+    for (let guessIndex = 0; guessIndex < game.guesses.length; guessIndex++) {
+        let guess = undefined
+        if (game && game.guesses && game.guesses.length >= guessIndex+1) {
+            guess = game.guesses[guessIndex]
         }
 
-        for (let j = 0; j < GameState.MAX_WORD_SIZE; j++) {
+        for (let letterIndex = 0; letterIndex < GameState.MAX_WORD_SIZE; letterIndex++) {
             const item = document.createElement('div')
-            let part
-            if (guess && guess.length >= j+1) {
-                part = guess[j]
+            let part = undefined
+            if (guess && guess.length >= letterIndex+1) {
+                part = guess[letterIndex]
             }
 
             if (part) {
@@ -106,8 +109,8 @@ function renderGuesses() {
     }
 
     // Render current input
-    for (let i = 0; i < game.currentInput.length; i++) {
-        const letter = game.currentInput.charAt(i)
+    for (let letterIndex = 0; letterIndex < game.currentInput.length; letterIndex++) {
+        const letter = game.currentInput.charAt(letterIndex)
         const item = document.createElement('div')
         item.className = 'letter'
         item.innerHTML = `<span>${letter}</span>`;
@@ -116,7 +119,7 @@ function renderGuesses() {
     }
 
     // Render empty tiles
-    for (let i = 0; i < emptyTiles; i++) {
+    for (let tileIndex = 0; tileIndex < emptyTiles; tileIndex++) {
         const item = document.createElement('div')
         item.className = 'letter'
         item.innerHTML = `<span></span>`;
@@ -124,7 +127,7 @@ function renderGuesses() {
     }
 }
 
-function paintKeyboard() {
+const paintKeyboard = ()=> {
     const keyboard_buttons = document.querySelectorAll("div#keyboard section span.key")
 
     keyboard_buttons.forEach(key => {

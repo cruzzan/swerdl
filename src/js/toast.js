@@ -1,4 +1,4 @@
-export function showToast(message, duration) {
+export const showToast = (message, duration) => {
     const container = document.getElementById('toast-container');
     const toast = document.createElement('div');
     toast.className = `toast toast-show`;
@@ -15,12 +15,12 @@ export function showToast(message, duration) {
         duration
     );
 
-    toast.querySelector('.toast-close').addEventListener('click', (e) => {
-        dismissToast(e.currentTarget);
+    toast.querySelector('.toast-close').addEventListener('click', (event) => {
+        dismissToast(event.currentTarget);
     })
 }
 
-function dismissToast(btn) {
+const dismissToast = (btn) => {
     const toast = btn.closest('.toast');
     toast.classList.add('toast-hide');
     setTimeout(() => toast.remove(), 300);

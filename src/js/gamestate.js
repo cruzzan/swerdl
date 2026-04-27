@@ -49,20 +49,20 @@ export class GameState {
         }
 
         const guessParts = []
-        for (let i = 0; i < word.length; i++) {
+        for (let letterIndex = 0; letterIndex < word.length; letterIndex++) {
             let partState = 0
-            if (word[i] === this.targetWord[i]) {
+            if (word[letterIndex] === this.targetWord[letterIndex]) {
                 partState = 2
-            } else if (this.targetWord.includes(word[i])) {
+            } else if (this.targetWord.includes(word[letterIndex])) {
                 partState = 1
             }
 
-            if (partState > this.letterStatuses[word[i]] || !this.letterStatuses[word[i]]) {
-                this.letterStatuses[word[i]] = partState
+            if (partState > this.letterStatuses[word[letterIndex]] || !this.letterStatuses[word[letterIndex]]) {
+                this.letterStatuses[word[letterIndex]] = partState
             }
 
             guessParts.push({
-                part: word[i],
+                part: word[letterIndex],
                 state: partState
             })
         }
@@ -101,10 +101,10 @@ export class GameState {
     #load() {
         try {
             const raw = localStorage.getItem(GameState.#STORAGE_KEY)
-            return raw ? JSON.parse(raw) : null
+            return JSON.parse(raw)
         } catch {
             console.error('no state')
-            return null
+            return undefined
         }
     }
 
