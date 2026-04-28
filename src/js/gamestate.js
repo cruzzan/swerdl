@@ -1,7 +1,6 @@
 import words from '../words.json'
 
 export class GameState {
-    static #STORAGE_KEY = 'svrdl-state'
     static MAX_WORD_SIZE = 5
     static MAX_GUESSES = 6
     static LETTER_STATE = { ABSENT: 0, CORRECT: 2, PRESENT: 1 }
@@ -13,26 +12,18 @@ export class GameState {
         this.currentInput = ""
         this.status = "playing"
         this.initializedAt = Date.now()
+    }
 
-        const gameState = this.#load()
-        if (gameState) {
-            const now = new Date(Date.now())
-            now.setHours(0, 0, 0, 0)
-            const initAt = new Date(gameState.initializedAt)
-            initAt.setHours(0, 0, 0, 0)
-
-            if (now.getTime() === initAt.getTime()) {
-                console.debug("Game state loaded", gameState)
-                this.targetWord = gameState.targetWord
-                this.guesses = gameState.guesses
-                this.letterStatuses = gameState.letterStatuses
-                this.currentInput = gameState.currentInput
-                this.status = gameState.status
-                this.initializedAt = gameState.initializedAt
-            }
-        }
-
-        this.#store()
+    static fromState(state) {
+        console.debug("Game state loaded", state)
+        const game = new GameState
+        game.targetWord = state.targetWord
+        game.guesses = state.guesses
+        game.letterStatuses = state.letterStatuses
+        game.currentInput = state.currentInput
+        game.status = state.status
+        game.initializedAt = state.initializedAt
+        return game
     }
 
     submitGuess() {
@@ -76,21 +67,17 @@ export class GameState {
         } else if (this.guesses.length >= GameState.MAX_GUESSES) {
             this.status = "lost"
         }
-
-        this.#store()
     }
 
     addLetter(letter) {
         if (this.currentInput.length < GameState.MAX_WORD_SIZE && this.status === 'playing') {
             this.currentInput += letter
-            this.#store()
         }
     }
 
     removeLetter() {
         if (this.currentInput.length > 0) {
             this.currentInput = this.currentInput.slice(0, -1)
-            this.#store()
         }
     }
 
@@ -98,30 +85,8 @@ export class GameState {
         return this.letterStatuses[letter];
     }
 
-    #load() {
-        try {
-            const raw = localStorage.getItem(GameState.#STORAGE_KEY)
-            return JSON.parse(raw)
-        } catch {
-            console.error('no state')
-            return undefined
-        }
-    }
-
-    #store() {
-        try {
-            localStorage.setItem(GameState.#STORAGE_KEY, JSON.stringify(this))
-        } catch {
-            console.warn("Could not save game state")
-        }
-    }
-
     #newWord() {
         const word = words[Math.floor(Math.random() * words.length)]
         return word.toUpperCase()
-    }
-
-    clear() {
-        localStorage.removeItem(GameState.#STORAGE_KEY)
     }
 }

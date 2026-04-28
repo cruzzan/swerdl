@@ -1,7 +1,25 @@
+import * as storage from './storage'
 import {GameState} from './gamestate'
 import {showToast} from './toast'
 
-const game = new GameState()
+const loadGame = () => {
+    const saved = storage.load()
+
+    if (saved) {
+        const now = new Date(Date.now())
+        now.setHours(0, 0, 0, 0)
+        const initAt = new Date(saved.initializedAt)
+        initAt.setHours(0, 0, 0, 0)
+        if (now.getTime() === initAt.getTime()) {
+            return GameState.fromState(saved)
+        }
+    }
+
+    return new GameState()
+}
+
+const game = loadGame()
+storage.store(game)
 
 const init = () => {
     // Regular keyboard input listener
@@ -25,7 +43,7 @@ const init = () => {
     })
 
     document.getElementById("reset-game").addEventListener('click', () => {
-        game.clear()
+        storage.clear()
         globalThis.location.reload()
     })
 
@@ -61,6 +79,7 @@ const handleInput = (key) => {
 
     renderGuesses()
     paintKeyboard()
+    storage.store(game)
 }
 
 const renderGuesses = () => {
@@ -89,11 +108,11 @@ const renderGuesses = () => {
             if (part) {
                 item.className = 'letter'
                 switch (part.state) {
-                    case 1: {
+                    case GameState.LETTER_STATE.PRESENT: {
                         item.className = `${item.className} present`
                         break
                     }
-                    case 2: {
+                    case GameState.LETTER_STATE.CORRECT: {
                         item.className = `${item.className} correct`
                         break
                     }
@@ -138,15 +157,15 @@ const paintKeyboard = ()=> {
         key.classList.remove("guessed")
 
         switch (game.letterStatus(key.getAttribute("data-value"))) {
-            case 2: {
+            case GameState.LETTER_STATE.CORRECT: {
                 key.classList.add("correct")
                 break
             }
-            case 1: {
+            case GameState.LETTER_STATE.PRESENT: {
                 key.classList.add("present")
                 break
             }
-            case 0: {
+            case GameState.LETTER_STATE.ABSENT: {
                 key.classList.add("guessed")
             }
         }
