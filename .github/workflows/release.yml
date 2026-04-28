@@ -19,7 +19,7 @@ jobs:
               run: |
                   yarn install
                   yarn build
-                  cd src/dist/ && tar -czf ../../swerdl.tar.gz index.html assets/ && cd ../../
+                  tar -czf swerdl.tar.gz -C dist/ index.html assets/
 
             - name: "Create release"
               uses: fnkr/github-action-ghr@v1
