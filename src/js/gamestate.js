@@ -4,6 +4,7 @@ export class GameState {
     static #STORAGE_KEY = 'svrdl-state'
     static MAX_WORD_SIZE = 5
     static MAX_GUESSES = 6
+    static LETTER_STATE = { ABSENT: 0, CORRECT: 2, PRESENT: 1 }
 
     constructor() {
         this.targetWord = this.#newWord()
@@ -50,11 +51,11 @@ export class GameState {
 
         const guessParts = []
         for (let letterIndex = 0; letterIndex < word.length; letterIndex++) {
-            let partState = 0
+            let partState = GameState.LETTER_STATE.ABSENT
             if (word[letterIndex] === this.targetWord[letterIndex]) {
-                partState = 2
+                partState = GameState.LETTER_STATE.CORRECT
             } else if (this.targetWord.includes(word[letterIndex])) {
-                partState = 1
+                partState = GameState.LETTER_STATE.PRESENT
             }
 
             if (partState > this.letterStatuses[word[letterIndex]] || !this.letterStatuses[word[letterIndex]]) {
@@ -70,7 +71,7 @@ export class GameState {
         this.guesses.push(guessParts)
         this.currentInput = ""
 
-        if (guessParts.reduce((acc, part) => acc + part.state, 0) === 10) {
+        if (guessParts.reduce((acc, part) => acc + part.state, 0) === GameState.MAX_WORD_SIZE * 2) {
             this.status = "won"
         } else if (this.guesses.length >= GameState.MAX_GUESSES) {
             this.status = "lost"
@@ -88,8 +89,7 @@ export class GameState {
 
     removeLetter() {
         if (this.currentInput.length > 0) {
-            const tmp = this.currentInput
-            this.currentInput = tmp.substring(0, tmp.length - 1)
+            this.currentInput = this.currentInput.slice(0, -1)
             this.#store()
         }
     }
