@@ -1,12 +1,13 @@
-import { dirname, resolve } from 'path'
-import { fileURLToPath } from 'url'
+import { defineConfig } from 'vite'
 
-const dir_name = dirname(fileURLToPath(import.meta.url))
-
-export default {
-  root: resolve(dir_name, 'src'),
-  server: {
-    hot: true,
-    port: 8080,
-  },
-}
+export default defineConfig({
+    build: {
+        emptyOutDir: true,
+        outDir: '../dist',
+    },
+    root: 'src',
+    server: {
+        hot: true,
+        port: 8080
+    }
+})
