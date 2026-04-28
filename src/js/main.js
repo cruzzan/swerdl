@@ -77,6 +77,10 @@ const renderGuesses = () => {
 
         for (let letterIndex = 0; letterIndex < GameState.MAX_WORD_SIZE; letterIndex++) {
             const item = document.createElement('div')
+            const inner = document.createElement('span')
+            item.appendChild(inner)
+            item.className = 'letter';
+
             let part = undefined
             if (guess && guess.length >= letterIndex+1) {
                 part = guess[letterIndex]
@@ -97,10 +101,8 @@ const renderGuesses = () => {
                         item.className = `${item.className} guessed`
                     }
                 }
-                item.innerHTML = `<span>${part.part}</span>`;
-            } else {
-                item.className = 'letter';
-                item.innerHTML = `<span></span>`;
+
+                inner.textContent = part.part
             }
 
             board.appendChild(item);
