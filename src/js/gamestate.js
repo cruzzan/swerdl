@@ -70,6 +70,12 @@ export class GameState {
     }
 
     addLetter(letter) {
+        letter = letter.slice(0, 1)
+
+        if (!/[A-ZÅÄÖ]/.test(letter)){
+            return
+        }
+
         if (this.currentInput.length < GameState.MAX_WORD_SIZE && this.status === 'playing') {
             this.currentInput += letter
         }
