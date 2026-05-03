@@ -1,4 +1,4 @@
-import words from '../words.json'
+import words from "../words.json"
 
 export class GameState {
     static MAX_WORD_SIZE = 5
@@ -16,7 +16,7 @@ export class GameState {
 
     static fromState(state) {
         console.debug("Game state loaded", state)
-        const game = new GameState
+        const game = new GameState()
         game.targetWord = state.targetWord
         game.guesses = state.guesses
         game.letterStatuses = state.letterStatuses
@@ -36,7 +36,10 @@ export class GameState {
             throw new Error("Word is not in the game")
         }
 
-        if (this.status !== "playing" || this.guesses.length >= GameState.MAX_GUESSES) {
+        if (
+            this.status !== "playing" ||
+            this.guesses.length >= GameState.MAX_GUESSES
+        ) {
             throw new Error("Game over")
         }
 
@@ -49,20 +52,26 @@ export class GameState {
                 partState = GameState.LETTER_STATE.PRESENT
             }
 
-            if (partState > this.letterStatuses[word[letterIndex]] || !this.letterStatuses[word[letterIndex]]) {
+            if (
+                partState > this.letterStatuses[word[letterIndex]] ||
+                !this.letterStatuses[word[letterIndex]]
+            ) {
                 this.letterStatuses[word[letterIndex]] = partState
             }
 
             guessParts.push({
                 part: word[letterIndex],
-                state: partState
+                state: partState,
             })
         }
 
         this.guesses.push(guessParts)
         this.currentInput = ""
 
-        if (guessParts.reduce((acc, part) => acc + part.state, 0) === GameState.MAX_WORD_SIZE * 2) {
+        if (
+            guessParts.reduce((acc, part) => acc + part.state, 0) ===
+            GameState.MAX_WORD_SIZE * 2
+        ) {
             this.status = "won"
         } else if (this.guesses.length >= GameState.MAX_GUESSES) {
             this.status = "lost"
@@ -72,11 +81,14 @@ export class GameState {
     addLetter(letter) {
         letter = letter.slice(0, 1)
 
-        if (!/[A-ZÅÄÖ]/.test(letter)){
+        if (!/[A-ZÅÄÖ]/.test(letter)) {
             return
         }
 
-        if (this.currentInput.length < GameState.MAX_WORD_SIZE && this.status === 'playing') {
+        if (
+            this.currentInput.length < GameState.MAX_WORD_SIZE &&
+            this.status === "playing"
+        ) {
             this.currentInput += letter
         }
     }
@@ -88,7 +100,7 @@ export class GameState {
     }
 
     letterStatus(letter) {
-        return this.letterStatuses[letter];
+        return this.letterStatuses[letter]
     }
 
     #newWord() {

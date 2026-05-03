@@ -13,14 +13,15 @@
     --duration: 3s;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
 body {
     display: grid;
     grid-template-rows: auto 1fr auto auto;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     background: var(--base-color);
 }
 

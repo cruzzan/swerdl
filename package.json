@@ -1,30 +1,30 @@
 {
-  "name": "swerdl",
-  "version": "1.0.0",
-  "description": "Guess the word!",
-  "main": "src/index.html",
-  "scripts": {
-    "dev": "vite --port 8080 --host",
-    "build": "vite build",
-    "preview": "vite preview",
-    "lint": "oxlint",
-    "lint:fix": "oxlint --fix",
-    "test": "vitest --no-watch",
-    "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check"
-  },
-  "repository": "git+https://github.com/cruzzan/swerdl.git",
-  "author": "Cruzzan",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cruzzan/swerdl/issues"
-  },
-  "homepage": "https://github.com/cruzzan/swerdl#readme",
-  "devDependencies": {
-    "@testing-library/dom": "^10.4.1",
-    "oxfmt": "^0.47.0",
-    "oxlint": "^1.62.0",
-    "vite": "8.0.5",
-    "vitest": "^4.1.5"
-  }
+    "name": "swerdl",
+    "version": "1.0.0",
+    "description": "Guess the word!",
+    "homepage": "https://github.com/cruzzan/swerdl#readme",
+    "bugs": {
+        "url": "https://github.com/cruzzan/swerdl/issues"
+    },
+    "license": "ISC",
+    "author": "Cruzzan",
+    "repository": "git+https://github.com/cruzzan/swerdl.git",
+    "main": "src/index.html",
+    "scripts": {
+        "dev": "vite --port 8080 --host",
+        "build": "vite build",
+        "preview": "vite preview",
+        "lint": "oxlint",
+        "lint:fix": "oxlint --fix",
+        "test": "vitest --no-watch",
+        "fmt": "oxfmt",
+        "fmt:check": "oxfmt --check"
+    },
+    "devDependencies": {
+        "@testing-library/dom": "^10.4.1",
+        "oxfmt": "^0.47.0",
+        "oxlint": "^1.62.0",
+        "vite": "8.0.5",
+        "vitest": "^4.1.5"
+    }
 }

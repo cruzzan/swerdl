@@ -1,75 +1,82 @@
 <!doctype html>
 <html lang="sv">
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <link href="style/sensible.css" rel="stylesheet" type="text/css">
-    <link href="style/style.css" rel="stylesheet" type="text/css">
-    <title>svrdl, almost as fun as the original</title>
-</head>
-<body>
-<header>
-    <nav>
-        <h1>SVRDL</h1>
-    </nav>
-</header>
-<main>
-    <div id="guesses"></div>
-    <div id="keyboard">
-        <section>
-            <span class="key" data-value="Q">Q</span>
-            <span class="key" data-value="W">W</span>
-            <span class="key" data-value="E">E</span>
-            <span class="key" data-value="R">R</span>
-            <span class="key" data-value="T">T</span>
-            <span class="key" data-value="Y">Y</span>
-            <span class="key" data-value="U">U</span>
-            <span class="key" data-value="I">I</span>
-            <span class="key" data-value="O">O</span>
-            <span class="key" data-value="P">P</span>
-            <span class="key" data-value="Å">Å</span>
-        </section>
-        <section>
-            <span class="key" data-value="A">A</span>
-            <span class="key" data-value="S">S</span>
-            <span class="key" data-value="D">D</span>
-            <span class="key" data-value="F">F</span>
-            <span class="key" data-value="G">G</span>
-            <span class="key" data-value="H">H</span>
-            <span class="key" data-value="J">J</span>
-            <span class="key" data-value="K">K</span>
-            <span class="key" data-value="L">L</span>
-            <span class="key" data-value="Ö">Ö</span>
-            <span class="key" data-value="Ä">Ä</span>
-        </section>
-        <section class="baserow">
-            <span class="key control" data-value="ENTER">ENTER</span>
-            <span class="key" data-value="Z">Z</span>
-            <span class="key" data-value="X">X</span>
-            <span class="key" data-value="C">C</span>
-            <span class="key" data-value="V">V</span>
-            <span class="key" data-value="B">B</span>
-            <span class="key" data-value="N">N</span>
-            <span class="key" data-value="M">M</span>
-            <span class="key control" data-value="BACKSPACE">⌫</span>
-        </section>
-    </div>
-</main>
-<!--<dialog id="help-dialog">-->
-<!--    <h2>Hur funkar det?</h2>-->
-<!--    <p>Svenska ord, som är 5 bokstäver långa. A-Ö</p>-->
-<!--    <p>Du har 6 försök på dig.</p>-->
-<!--    <p>När bakgrunden på en gissad bokstav är gul, så förekommer bokstaven, men den är inte på rätt plats.</p>-->
-<!--    <p>När bakgrunden på en gissad bokstav är grön, så är bokstaven rätt gissad.</p>-->
-<!--    <p>När bakgrunden på en gissad bokstav förblir grå, så är bokstaven inte med i ordet.</p>-->
-<!--    <button id="help-close" type="button">Stäng</button>-->
-<!--</dialog>-->
-<div id="toast-container"></div>
-<footer>
-    <a href="#" id="toast-tester" title="Testa brödrosten">Test toast</a>
-    <a href="#" id="reset-game" title="Starta om spelet">Starta om</a>
-    <a href="https://github.com/cruzzan/swerdl" title="Gå till GitHub repot" target="_blank">This repo</a>
-</footer>
-<script src="js/main.js" type="module"></script>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <link href="style/sensible.css" rel="stylesheet" type="text/css" />
+        <link href="style/style.css" rel="stylesheet" type="text/css" />
+        <title>svrdl, almost as fun as the original</title>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <h1>SVRDL</h1>
+            </nav>
+        </header>
+        <main>
+            <div id="guesses"></div>
+            <div id="keyboard">
+                <section>
+                    <span class="key" data-value="Q">Q</span>
+                    <span class="key" data-value="W">W</span>
+                    <span class="key" data-value="E">E</span>
+                    <span class="key" data-value="R">R</span>
+                    <span class="key" data-value="T">T</span>
+                    <span class="key" data-value="Y">Y</span>
+                    <span class="key" data-value="U">U</span>
+                    <span class="key" data-value="I">I</span>
+                    <span class="key" data-value="O">O</span>
+                    <span class="key" data-value="P">P</span>
+                    <span class="key" data-value="Å">Å</span>
+                </section>
+                <section>
+                    <span class="key" data-value="A">A</span>
+                    <span class="key" data-value="S">S</span>
+                    <span class="key" data-value="D">D</span>
+                    <span class="key" data-value="F">F</span>
+                    <span class="key" data-value="G">G</span>
+                    <span class="key" data-value="H">H</span>
+                    <span class="key" data-value="J">J</span>
+                    <span class="key" data-value="K">K</span>
+                    <span class="key" data-value="L">L</span>
+                    <span class="key" data-value="Ö">Ö</span>
+                    <span class="key" data-value="Ä">Ä</span>
+                </section>
+                <section class="baserow">
+                    <span class="key control" data-value="ENTER">ENTER</span>
+                    <span class="key" data-value="Z">Z</span>
+                    <span class="key" data-value="X">X</span>
+                    <span class="key" data-value="C">C</span>
+                    <span class="key" data-value="V">V</span>
+                    <span class="key" data-value="B">B</span>
+                    <span class="key" data-value="N">N</span>
+                    <span class="key" data-value="M">M</span>
+                    <span class="key control" data-value="BACKSPACE">⌫</span>
+                </section>
+            </div>
+        </main>
+        <!--<dialog id="help-dialog">-->
+        <!--    <h2>Hur funkar det?</h2>-->
+        <!--    <p>Svenska ord, som är 5 bokstäver långa. A-Ö</p>-->
+        <!--    <p>Du har 6 försök på dig.</p>-->
+        <!--    <p>När bakgrunden på en gissad bokstav är gul, så förekommer bokstaven, men den är inte på rätt plats.</p>-->
+        <!--    <p>När bakgrunden på en gissad bokstav är grön, så är bokstaven rätt gissad.</p>-->
+        <!--    <p>När bakgrunden på en gissad bokstav förblir grå, så är bokstaven inte med i ordet.</p>-->
+        <!--    <button id="help-close" type="button">Stäng</button>-->
+        <!--</dialog>-->
+        <div id="toast-container"></div>
+        <footer>
+            <a href="#" id="toast-tester" title="Testa brödrosten"
+                >Test toast</a
+            >
+            <a href="#" id="reset-game" title="Starta om spelet">Starta om</a>
+            <a
+                href="https://github.com/cruzzan/swerdl"
+                title="Gå till GitHub repot"
+                target="_blank"
+                >This repo</a
+            >
+        </footer>
+        <script src="js/main.js" type="module"></script>
+    </body>
 </html>
