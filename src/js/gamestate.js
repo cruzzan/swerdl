@@ -16,12 +16,12 @@ export class GameState {
 
     static fromState(state) {
         const game = new GameState()
-        game.targetWord = state.targetWord
-        game.guesses = state.guesses
-        game.letterStatuses = state.letterStatuses
-        game.currentInput = state.currentInput
-        game.status = state.status
-        game.initializedAt = state.initializedAt
+        game.targetWord = state.targetWord ?? game.#newWord()
+        game.guesses = state.guesses ?? []
+        game.letterStatuses = state.letterStatuses ?? {}
+        game.currentInput = state.currentInput ?? ""
+        game.status = state.status ?? "playing"
+        game.initializedAt = state.initializedAt ?? Date.now()
         return game
     }
 
@@ -53,7 +53,7 @@ export class GameState {
 
             if (
                 partState > this.letterStatuses[word[letterIndex]] ||
-                !this.letterStatuses[word[letterIndex]]
+                this.letterStatuses[word[letterIndex]] === undefined
             ) {
                 this.letterStatuses[word[letterIndex]] = partState
             }
@@ -68,8 +68,9 @@ export class GameState {
         this.currentInput = ""
 
         if (
-            guessParts.reduce((acc, part) => acc + part.state, 0) ===
-            GameState.MAX_WORD_SIZE * 2
+            guessParts.every(
+                (part) => part.state === GameState.LETTER_STATE.CORRECT,
+            )
         ) {
             this.status = "won"
         } else if (this.guesses.length >= GameState.MAX_GUESSES) {

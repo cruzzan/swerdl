@@ -89,15 +89,10 @@ const handleInput = (key) => {
 const renderGuesses = () => {
     let emptyTiles = GameState.MAX_WORD_SIZE * GameState.MAX_GUESSES
     const board = document.getElementById("guesses")
-    board.innerHTML = ""
 
+    const tiles = []
     // Render guesses
-    for (let guessIndex = 0; guessIndex < game.guesses.length; guessIndex++) {
-        let guess = undefined
-        if (game && game.guesses && game.guesses.length >= guessIndex + 1) {
-            guess = game.guesses[guessIndex]
-        }
-
+    game.guesses.forEach((guess) => {
         for (
             let letterIndex = 0;
             letterIndex < GameState.MAX_WORD_SIZE;
@@ -114,7 +109,6 @@ const renderGuesses = () => {
             }
 
             if (part) {
-                item.className = "letter"
                 switch (part.state) {
                     case GameState.LETTER_STATE.PRESENT: {
                         item.className = `${item.className} present`
@@ -132,10 +126,10 @@ const renderGuesses = () => {
                 inner.textContent = part.part
             }
 
-            board.appendChild(item)
+            tiles.push(item)
             emptyTiles--
         }
-    }
+    })
 
     // Render current input
     for (
@@ -146,8 +140,12 @@ const renderGuesses = () => {
         const letter = game.currentInput.charAt(letterIndex)
         const item = document.createElement("div")
         item.className = "letter"
-        item.innerHTML = `<span>${letter}</span>`
-        board.appendChild(item)
+
+        const span = document.createElement("span")
+        span.textContent = letter
+        item.appendChild(span)
+
+        tiles.push(item)
         emptyTiles--
     }
 
@@ -155,9 +153,13 @@ const renderGuesses = () => {
     for (let tileIndex = 0; tileIndex < emptyTiles; tileIndex++) {
         const item = document.createElement("div")
         item.className = "letter"
-        item.innerHTML = `<span></span>`
-        board.appendChild(item)
+        const empty = document.createElement("span")
+        item.appendChild(empty)
+
+        tiles.push(item)
     }
+
+    board.replaceChildren(...tiles)
 }
 
 const paintKeyboard = () => {
