@@ -118,14 +118,132 @@ describe("guess input", () => {
     })
 
     test("adding a letter when input is full", () => {
-        const game = new GameState()
-        const word = ["S", "K", "R", "U", "V", "Ö"]
-
-        word.forEach((letter) => {
-            game.addLetter(letter)
+        const game = GameState.fromState({
+            currentInput: "SKRUV",
+            initializedAt: Date.now(),
+            targetWord: "SKRUV",
         })
 
         expect(game.currentInput).toHaveLength(GameState.MAX_WORD_SIZE)
         expect(game.currentInput).not.toContain("Ö")
+    })
+
+    test("deleting letter", () => {
+        const game = GameState.fromState({
+            currentInput: "SKRUV",
+        })
+
+        game.removeLetter()
+
+        expect(game.currentInput).toHaveLength(4)
+        expect(game.currentInput).toBe("SKRU")
+    })
+
+    test("submit guess that is too short throws error", () => {
+        const game = GameState.fromState({
+            currentInput: "SKRU",
+        })
+
+        expect(() => {
+            game.submitGuess()
+        }).toThrow("Word is too short")
+    })
+
+    test("submit guess that is not in the game throws error", () => {
+        const game = GameState.fromState({
+            currentInput: "APPLE",
+        })
+
+        expect(() => {
+            game.submitGuess()
+        }).toThrow("Word is not in the game")
+    })
+
+    test("submit guess when game is lost throws error", () => {
+        const game = GameState.fromState({
+            currentInput: "SKRUV",
+            status: "lost",
+        })
+
+        expect(() => {
+            game.submitGuess()
+        }).toThrow("Game over")
+    })
+
+    test("submit guess when game is won throws error", () => {
+        const game = GameState.fromState({
+            currentInput: "SKRUV",
+            status: "won",
+        })
+
+        expect(() => {
+            game.submitGuess()
+        }).toThrow("Game over")
+    })
+
+    test("submit final guess with wrong word should lose game", () => {
+        const game = GameState.fromState({
+            currentInput: "SKRUV",
+            guesses: [[], [], [], [], []],
+            letterStatuses: {},
+            status: "playing",
+            targetWord: "GRUVA",
+        })
+
+        game.submitGuess()
+
+        expect(game.status).toBe("lost")
+    })
+
+    test("submit correct guess should win game", () => {
+        const game = GameState.fromState({
+            currentInput: "SKRUV",
+            guesses: [],
+            letterStatuses: {},
+            status: "playing",
+            targetWord: "SKRUV",
+        })
+
+        game.submitGuess()
+
+        expect(game.status).toBe("won")
+    })
+
+    test("submit guess with no correct letters", () => {
+        const game = GameState.fromState({
+            currentInput: "SKRUV",
+            guesses: [],
+            letterStatuses: {},
+            status: "playing",
+            targetWord: "PÅTAD",
+        })
+
+        game.submitGuess()
+
+        for (const char of "SKRUV") {
+            expect(game.letterStatus(char)).toBe(GameState.LETTER_STATE.ABSENT)
+        }
+    })
+
+    test("submit guess with mix of letter states", () => {
+        const game = GameState.fromState({
+            currentInput: "SKRUV",
+            guesses: [],
+            letterStatuses: {},
+            status: "playing",
+            targetWord: "SKARV",
+        })
+
+        game.submitGuess()
+
+        expect(game.letterStatus("S")).toBe(GameState.LETTER_STATE.CORRECT)
+
+        expect(game.letterStatus("K")).toBe(GameState.LETTER_STATE.CORRECT)
+
+        expect(game.letterStatus("R")).toBe(GameState.LETTER_STATE.PRESENT)
+
+        expect(game.letterStatus("U")).toBe(GameState.LETTER_STATE.ABSENT)
+
+        expect(game.letterStatus("V")).toBe(GameState.LETTER_STATE.CORRECT)
     })
 })
