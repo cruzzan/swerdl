@@ -15,7 +15,6 @@ export class GameState {
     }
 
     static fromState(state) {
-        console.debug("Game state loaded", state)
         const game = new GameState()
         game.targetWord = state.targetWord
         game.guesses = state.guesses
